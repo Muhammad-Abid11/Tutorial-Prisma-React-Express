@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function TodoInput({ onAdd }) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
-  const  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (text.trim()) {
-      onAdd(text);
-      setText('');
+    if (text.trim().length < 3) {
+      toast.error("Title must be at least 3 characters long");
+      return;
     }
+    onAdd(text);
+    setText("");
+    toast.success("Todo added successfully");
   };
 
   return (

@@ -1,29 +1,35 @@
-# React Todo App with Tailwind CSS
+# Todo App Client (React + Vite)
 
-This project is a **CRUD Todo application** built with React and styled using Tailwind CSS.
+This is the frontend for the Todo Application, built with React, Vite, and Tailwind CSS.
 
 ## Features
-- **CRUD Operations**: Create, Read, Update (Toggle completion), and Delete tasks.
-- **Modern UI**: Styled with Tailwind CSS for a sleek, responsive design.
 
-## Setup & Configuration
+- **Modern UI**: Styled with Tailwind CSS for a dark, sleek look.
+- **API Integration**: Connects to the Express backend to manage todos.
+- **Real-time Updates**: State management ensures the UI reflects the latest data.
 
-To enable the styling architecture, we installed and configured the following libraries:
+## Setup
 
-```bash
-npm install -D tailwindcss postcss autoprefixer
-```
+1.  **Install Dependencies:**
 
-These tools are configured to provide a utility-first CSS framework for rapidly building custom user interfaces.
-
-## Getting Started
-
-1.  **Install dependencies:**
     ```bash
     npm install
     ```
 
-2.  **Run the development server:**
+2.  **Environment Variables:**
+    Create a `.env` file in the `Client` directory:
+
+    ```env
+    VITE_BACKEND_URL=http://localhost:3001
+    ```
+
+3.  **Run Development Server:**
     ```bash
     npm run dev
     ```
+
+## Structure
+
+- `src/api`: Axios setup and service functions.
+- `src/components`: Reusable UI components (`TodoInput`, `TodoItem`).
+- `src/App.jsx`: Main application logic.
