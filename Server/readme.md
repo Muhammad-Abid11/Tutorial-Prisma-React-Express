@@ -1,6 +1,6 @@
 # Prisma + Express + PostgreSQL (Beginner's Guide)
 
-This guide explains how to set up Prisma ORM with an Express server using PostgreSQL. It is tailored for a **JavaScript** project using Prisma 7.
+This guide explains how to set up Prisma ORM with an Express server using PostgreSQL. It is tailored for a **JavaScript** project using Prisma 7. Here is a reference video that also helps you understand the process better: [Prisma 7](https://www.youtube.com/watch?v=Ndhx_rNkoUw).
 
 ## 1. Installation
 

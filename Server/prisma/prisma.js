@@ -5,7 +5,17 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from "../generated/prisma/index.js";
 
 
-const connectionString = `${process.env.DATABASE_URL}`
+const connectionString = process.env.DATABASE_URL
+const frontendUrl = process.env.FRONTEND_URL
+
+if (!connectionString || connectionString === "undefined") {
+    console.error("❌ ERROR: DATABASE_URL is not defined. Check your .env file.");
+    process.exit(1);
+}
+if (!frontendUrl || frontendUrl === "undefined") {
+    console.error("❌ ERROR: FRONTEND_URL is not defined. Check your .env file.");
+    process.exit(1);
+}
 
 const adapter = new PrismaPg({ connectionString })
 const prisma = new PrismaClient({ adapter })
