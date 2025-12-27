@@ -2,7 +2,14 @@ import prisma from "../../prisma/prisma.js";
 
 const getAllTodos = async (req, res) => {
     try {
-        const todos = await prisma.todos.findMany();
+        const todos = await prisma.todos.findMany({
+            where: {
+                userId: req.userId
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+        });
         res.json({ todos, message: "Todos fetched successfully" });
     } catch (error) {
         console.error("Error fetching todos:", error);
@@ -18,6 +25,7 @@ const createTodo = async (req, res) => {
             data: {
                 title,
                 completed: false,
+                userId: req.userId,
             },
         });
         res.json({ todo, message: "Todo created successfully" });
@@ -34,6 +42,7 @@ const updateTodo = async (req, res) => {
         const todo = await prisma.todos.update({
             where: {
                 id: parseInt(id),
+                userId: req.userId,
             },
             data: {
                 title,
@@ -42,13 +51,8 @@ const updateTodo = async (req, res) => {
         });
         res.json({ todo, message: "Todo updated successfully" });
     } catch (error) {
-        // error code P2025 means record not found
-        // ✅ Pros:
-        // Clear 404 for missing records
-        // No server error for expected scenarios
-        // No need to check if record (no api extra call findUnique) exists before deleting
         if (error && error.code === "P2025") {
-            return res.status(404).json({ error: "Todo not found" });
+            return res.status(404).json({ error: "Todo not found or unauthorized" });
         }
         console.error("Error updating todo:", error);
         res.status(500).json({ error: "Failed to update todo" });
@@ -59,22 +63,21 @@ const deleteTodo = async (req, res) => {
     try {
         const { id } = req.params;
         const todo = await prisma.todos.delete({
-            where: { id: parseInt(id) },
+            where: {
+                id: parseInt(id),
+                userId: req.userId,
+            },
         });
         res.json({ todo, message: "Todo deleted successfully" });
     } catch (error) {
-        // error code P2025 means record not found
-        // ✅ Pros:
-        // Clear 404 for missing records
-        // No server error for expected scenarios
-        // No need to check if record (no api extra call findUnique) exists before deleting
         if (error && error.code === "P2025") {
-            return res.status(404).json({ error: "Todo not found" });
+            return res.status(404).json({ error: "Todo not found or unauthorized" });
         }
         console.error("Error deleting todo:", error);
         res.status(500).json({ error: "Failed to delete todo" });
     }
 };
+
 
 export {
     getAllTodos,

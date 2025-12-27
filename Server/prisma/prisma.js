@@ -4,9 +4,11 @@
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from "../generated/prisma/index.js";
 
-
-const connectionString = process.env.DATABASE_URL
-const frontendUrl = process.env.FRONTEND_URL
+export const connectionString = process.env.DATABASE_URL
+export const frontendUrl = process.env.FRONTEND_URL
+export const PORT = process.env.PORT
+export const JWT_SECRET = process.env.JWT_SECRET;
+export const EXPIRE_IN = process.env.EXPIRE_IN;
 
 if (!connectionString || connectionString === "undefined") {
     console.error("❌ ERROR: DATABASE_URL is not defined. Check your .env file.");
@@ -14,6 +16,18 @@ if (!connectionString || connectionString === "undefined") {
 }
 if (!frontendUrl || frontendUrl === "undefined") {
     console.error("❌ ERROR: FRONTEND_URL is not defined. Check your .env file.");
+    process.exit(1);
+}
+if (!JWT_SECRET || JWT_SECRET === "undefined") {
+    console.error("❌ ERROR: JWT_SECRET is not defined. Check your .env file.");
+    process.exit(1);
+}
+if (!EXPIRE_IN || EXPIRE_IN === "undefined") {
+    console.error("❌ ERROR: EXPIRE_IN is not defined. Check your .env file.");
+    process.exit(1);
+}
+if (!PORT || PORT === "undefined") {
+    console.error("❌ ERROR: PORT is not defined. Check your .env file.");
     process.exit(1);
 }
 

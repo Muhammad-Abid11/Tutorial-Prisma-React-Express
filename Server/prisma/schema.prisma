@@ -13,10 +13,25 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  todos     Todos[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Todos {
   id        Int      @id @default(autoincrement())
   title     String
   completed Boolean  @default(false)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// This line tells Prisma that this model belongs to one User, using userId as a foreign key that references User.id
+// Todos.userId → User.id
